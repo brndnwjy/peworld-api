@@ -85,7 +85,7 @@ const userController = {
       const { id } = req.params;
 
       const data = await userModel.getUserSkill(id);
-      const skill = data.rows
+      const skill = data.rows;
 
       res.json({
         msg: "get user skill berhasil",
@@ -93,6 +93,23 @@ const userController = {
       });
     } catch {
       next(new createError.InternalServerError());
+    }
+  },
+
+  getUserPortfolio: async (req, res, next) => {
+    try {
+      const {id} = req.params;
+
+      const data = await userModel.getUserPortfolio(id);
+      const porto = data.rows;
+
+      res.json({
+        msg: "get user skill berhasil",
+        portfolio: porto,
+      });
+
+    } catch {
+      next (new createError.InternalServerError())
     }
   },
 
@@ -106,6 +123,32 @@ const userController = {
       res.json({
         msg: "insert skill berhasil",
         skill: name,
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
+  insertPortfolio: async (req, res, next) => {
+    try {
+      let image;
+      if (req.file) {
+        image = `http://${req.get("host")}/portofolio/${req.file.filename}`;
+      }
+
+      const data = {
+        id: req.body.id,
+        name: req.body.name,
+        link: req.body.link,
+        type: req.body.type,
+        image,
+      };
+
+      await userModel.insertPortfolio(data);
+
+      res.json({
+        msg: "insert porto berhasil",
+        data: data,
       });
     } catch {
       next(new createError.InternalServerError());
@@ -147,20 +190,66 @@ const userController = {
     }
   },
 
+  editPortfolio: async (req, res, next) => {
+    try {
+      const {id, porto_id} = req.params;
+
+      let image;
+
+      if (req.file) {
+        image = `http://${req.get("host")}/portfolio/${req.file.filename}`;
+      }
+
+      const data = {
+        id, 
+        porto_id,
+        name : req.body.name,
+        link : req.body.link,
+        type : req.body.type,
+        image
+      }
+
+      console.log(data)
+
+      await userModel.editPortfolio(data)
+
+      res.json({
+        msg: "update portfolio berhasil",
+        data: data
+      })
+    } catch {
+      next (new createError.InternalServerError())
+    }
+  },
+
   // delete
   deleteSkill: async (req, res, next) => {
-   try {
-    const {id, skill_id} = req.params;
+    try {
+      const { id, skill_id } = req.params;
 
-    await userModel.deleteSkill(id, skill_id)
+      await userModel.deleteSkill(id, skill_id);
 
-    res.json({
-      msg: "delete skill berhasil"
-    })
-   } catch {
-    next(new createError.InternalServerError());
-   } 
-  }
+      res.json({
+        msg: "delete skill berhasil",
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
+  deletePortfolio: async (req, res, next) => {
+    try {
+      const { id, porto_id } = req.params;
+
+      await userModel.deletePortfolio(id, porto_id);
+
+      res.json({
+        msg: "delete portfolio berhasil",
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
 };
 
 module.exports = userController;

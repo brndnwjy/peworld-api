@@ -25,11 +25,25 @@ const userModel = {
     return pool.query(`SELECT * FROM skills WHERE user_id = $1`, [id]);
   },
 
+  getUserPortfolio: (id) => {
+    return pool.query(`SELECT * FROM portfolio WHERE user_id = $1`, [id]);
+  },
+
   // insert
   insertSkill: (id, name) => {
     return pool.query(
       `INSERT INTO skills (user_id, skill_name) VALUES ($1, $2)`,
       [id, name]
+    );
+  },
+
+  insertPortfolio: (data) => {
+    return pool.query(
+      `
+    INSERT INTO portfolio (user_id, app_name, app_link, app_type, app_image)
+    VALUES ($1, $2, $3, $4, $5)
+    `,
+      [data.id, data.name, data.link, data.type, data.image]
     );
   },
 
@@ -64,11 +78,32 @@ const userModel = {
     );
   },
 
+  editPortfolio: (data) => {
+    return pool.query(
+      `
+    UPDATE portfolio SET
+    app_name = COALESCE ($1, app_name),
+    app_link = COALESCE ($2, app_link),
+    app_type = COALESCE ($3, app_type),
+    app_image = COALESCE ($4, app_image)
+    WHERE user_id = $5 AND app_id = $6
+    `,
+      [data.name, data.link, data.type, data.image, data.id, data.porto_id]
+    );
+  },
+
   // delete
   deleteSkill: (id, skill_id) => {
     return pool.query(
       `DELETE FROM skills WHERE user_id = $1 AND skill_id = $2`,
       [id, skill_id]
+    );
+  },
+
+  deletePortfolio: (id, porto_id) => {
+    return pool.query(
+      `DELETE FROM portfolio WHERE user_id = $1 AND app_id = $2`,
+      [id, porto_id]
     );
   },
 };
