@@ -29,6 +29,10 @@ const userModel = {
     return pool.query(`SELECT * FROM portfolio WHERE user_id = $1`, [id]);
   },
 
+  getUserExperience: (id) => {
+    return pool.query(`SELECT * FROM experience WHERE user_id = $1`, [id]);
+  },
+
   // insert
   insertSkill: (id, name) => {
     return pool.query(
@@ -44,6 +48,16 @@ const userModel = {
     VALUES ($1, $2, $3, $4, $5)
     `,
       [data.id, data.name, data.link, data.type, data.image]
+    );
+  },
+
+  insertExperience: (data) => {
+    return pool.query(
+      `
+    INSERT INTO experience (user_id, company_id, start_date, end_date, description)
+    VALUES ($1, $2, $3, $4, $5)
+    `,
+      [data.id, data.company_id, data.start, data.end, data.description]
     );
   },
 
@@ -92,6 +106,27 @@ const userModel = {
     );
   },
 
+  editExperience: (data) => {
+    return pool.query(
+      `
+    UPDATE experience SET
+    company_id = COALESCE($1, company_id),
+    start_date = COALESCE($2, start_date),
+    end_date = COALESCE($3, end_date),
+    description = COALESCE($4, description)
+    WHERE user_id = $5 AND exp_id = $6
+    `,
+      [
+        data.company_id,
+        data.start,
+        data.end,
+        data.description,
+        data.id,
+        data.exp_id,
+      ]
+    );
+  },
+
   // delete
   deleteSkill: (id, skill_id) => {
     return pool.query(
@@ -104,6 +139,13 @@ const userModel = {
     return pool.query(
       `DELETE FROM portfolio WHERE user_id = $1 AND app_id = $2`,
       [id, porto_id]
+    );
+  },
+
+  deleteExperience: (id, exp_id) => {
+    return pool.query(
+      `DELETE FROM experience WHERE user_id = $1 AND exp_id = $2`,
+      [id, exp_id]
     );
   },
 };

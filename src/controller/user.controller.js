@@ -98,7 +98,7 @@ const userController = {
 
   getUserPortfolio: async (req, res, next) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
 
       const data = await userModel.getUserPortfolio(id);
       const porto = data.rows;
@@ -107,9 +107,24 @@ const userController = {
         msg: "get user skill berhasil",
         portfolio: porto,
       });
-
     } catch {
-      next (new createError.InternalServerError())
+      next(new createError.InternalServerError());
+    }
+  },
+
+  getUserExperience: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const data = await userModel.getUserExperience(id);
+      const exp = data.rows;
+
+      res.json({
+        msg: "get user experience berhasil",
+        experiences: exp,
+      });
+    } catch {
+      next(new createError.InternalServerError());
     }
   },
 
@@ -155,6 +170,27 @@ const userController = {
     }
   },
 
+  insertExperience: async (req, res, next) => {
+    try {
+      const data = {
+        id: req.body.id,
+        company_id: req.body.company_id,
+        start: req.body.start,
+        end: req.body.end,
+        description: req.body.description,
+      };
+
+      await userModel.insertExperience(data);
+
+      res.json({
+        msg: "insert experience berhasil",
+        data: data,
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
   // update
   editUserDetail: async (req, res, next) => {
     try {
@@ -192,7 +228,7 @@ const userController = {
 
   editPortfolio: async (req, res, next) => {
     try {
-      const {id, porto_id} = req.params;
+      const { id, porto_id } = req.params;
 
       let image;
 
@@ -201,24 +237,50 @@ const userController = {
       }
 
       const data = {
-        id, 
+        id,
         porto_id,
-        name : req.body.name,
-        link : req.body.link,
-        type : req.body.type,
-        image
-      }
+        name: req.body.name,
+        link: req.body.link,
+        type: req.body.type,
+        image,
+      };
 
-      console.log(data)
+      console.log(data);
 
-      await userModel.editPortfolio(data)
+      await userModel.editPortfolio(data);
 
       res.json({
         msg: "update portfolio berhasil",
-        data: data
-      })
+        data: data,
+      });
     } catch {
-      next (new createError.InternalServerError())
+      next(new createError.InternalServerError());
+    }
+  },
+
+  editExperience: async (req, res, next) => {
+    try {
+      const { id, exp_id } = req.params;
+
+      const data = {
+        id,
+        exp_id,
+        company_id: req.body.company_id,
+        start: req.body.start,
+        date: req.body.date,
+        description: req.body.description,
+      };
+
+      console.log(data);
+
+      await userModel.editExperience(data);
+
+      res.json({
+        msg: "update experience berhasil",
+        data: data,
+      });
+    } catch {
+      next(new createError.InternalServerError());
     }
   },
 
@@ -245,6 +307,20 @@ const userController = {
 
       res.json({
         msg: "delete portfolio berhasil",
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
+  deleteExperience: async (req, res, next) => {
+    try {
+      const { id, exp_id } = req.params;
+
+      await userModel.deleteExperience(id, exp_id);
+
+      res.json({
+        msg: "delete experience berhasil",
       });
     } catch {
       next(new createError.InternalServerError());
