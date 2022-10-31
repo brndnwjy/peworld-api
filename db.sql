@@ -27,7 +27,7 @@ CREATE TABLE companies (
     location VARCHAR(32),
     description VARCHAR,
     insta VARCHAR(32),
-    linkedin VARCHAR(32),
+    linkedin VARCHAR(32)
 );
 
 CREATE TABLE skills (
@@ -38,7 +38,7 @@ CREATE TABLE skills (
 
 CREATE TABLE portfolio (
     app_id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id REFERENCES users(user_id),
+    user_id UUID REFERENCES users(user_id),
     app_name VARCHAR(64),
     app_link VARCHAR,
     app_type BOOLEAN,
@@ -47,8 +47,8 @@ CREATE TABLE portfolio (
 
 CREATE TABLE experience (
     exp_id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id REFERENCES users(user_id),
-    company_id REFERENCES companies(company_id),
+    user_id UUID REFERENCES users(user_id),
+    company_id UUID REFERENCES companies(company_id),
     start_date TIMESTAMPTZ,
     end_date TIMESTAMPTZ,
     description VARCHAR
@@ -56,8 +56,8 @@ CREATE TABLE experience (
 
 CREATE TABLE offers (
     offer_id UUID PRIMARY KEY,
-    user_id REFERENCES users(user_id),
-    comp_id REFERENCES companies(company_id),
+    user_id UUID REFERENCES users(user_id),
+    comp_id UUID REFERENCES companies(company_id),
     offer_type BOOLEAN NOT NULL,
     cp_name VARCHAR(32) NOT NULL,
     cp_email VARCHAR(64) NOT NULL,

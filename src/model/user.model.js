@@ -1,6 +1,7 @@
 const pool = require("../config/db");
 
 const userModel = {
+  // auth
   register: ({ id, fullname, email, phone, hashedPassword }) => {
     return pool.query(
       `
@@ -15,10 +16,24 @@ const userModel = {
     return pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
   },
 
+  // profile
   getUserDetail: (id) => {
     return pool.query(`SELECT * FROM users WHERE user_id = $1`, [id]);
   },
 
+  getUserSkill: (id) => {
+    return pool.query(`SELECT * FROM skills WHERE user_id = $1`, [id]);
+  },
+
+  // insert
+  insertSkill: (id, name) => {
+    return pool.query(
+      `INSERT INTO skills (user_id, skill_name) VALUES ($1, $2)`,
+      [id, name]
+    );
+  },
+
+  // update
   editUserDetail: (data) => {
     return pool.query(
       `
@@ -46,6 +61,14 @@ const userModel = {
         data.linkedin,
         data.id,
       ]
+    );
+  },
+
+  // delete
+  deleteSkill: (id, skill_id) => {
+    return pool.query(
+      `DELETE FROM skills WHERE user_id = $1 AND skill_id = $2`,
+      [id, skill_id]
     );
   },
 };

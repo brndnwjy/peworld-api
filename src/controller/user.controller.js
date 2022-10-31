@@ -4,6 +4,7 @@ const { hash, compare } = require("bcryptjs");
 const createError = require("http-errors");
 
 const userController = {
+  // auth
   register: async (req, res, next) => {
     try {
       const id = uuid();
@@ -62,6 +63,7 @@ const userController = {
     }
   },
 
+  // profile
   getUserDetail: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -78,6 +80,39 @@ const userController = {
     }
   },
 
+  getUserSkill: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const data = await userModel.getUserSkill(id);
+      const skill = data.rows
+
+      res.json({
+        msg: "get user skill berhasil",
+        skills: skill,
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
+  // insert
+  insertSkill: async (req, res, next) => {
+    try {
+      const { id, name } = req.body;
+
+      await userModel.insertSkill(id, name);
+
+      res.json({
+        msg: "insert skill berhasil",
+        skill: name,
+      });
+    } catch {
+      next(new createError.InternalServerError());
+    }
+  },
+
+  // update
   editUserDetail: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -111,6 +146,21 @@ const userController = {
       next(new createError.InternalServerError());
     }
   },
+
+  // delete
+  deleteSkill: async (req, res, next) => {
+   try {
+    const {id, skill_id} = req.params;
+
+    await userModel.deleteSkill(id, skill_id)
+
+    res.json({
+      msg: "delete skill berhasil"
+    })
+   } catch {
+    next(new createError.InternalServerError());
+   } 
+  }
 };
 
 module.exports = userController;
