@@ -1,4 +1,5 @@
 const express = require("express");
+const { register, login } = require("../controller/company.controller");
 const router = express.Router();
 
 router
@@ -7,19 +8,19 @@ router
 .post("/login", login)
 
 // profile
-.get("/profile", getCompanyDetail)
+// .get("/profile", getCompanyDetail)
 
 // home
-.get("/user", getUser)
-.get("/user/:id", getUserDetail)
+// .get("/user", getUser)
+// .get("/user/:id", getUserDetail)
 
 // insert new data
-.post("/offer", createOffer)
+// .post("/offer", createOffer)
 
 // update user data
-.put("/", editCompanyDetail)
+// .put("/", editCompanyDetail)
 
 // delete user data
-.delete("/offer/:id", cancelOffer)
+// .delete("/offer/:id", cancelOffer)
 
 module.exports = router;
