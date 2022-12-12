@@ -2,6 +2,9 @@ const userModel = require("../model/user.model");
 const { v4: uuid } = require("uuid");
 const { hash, compare } = require("bcryptjs");
 const createError = require("http-errors");
+const { generate, reGenerate } = require("../helper/auth.helper");
+const response = require("../helper/response.helper");
+const cloudinary = require("../helper/cloudinary");
 
 const userController = {
   // auth
@@ -27,7 +30,8 @@ const userController = {
         mesg: "register berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -54,11 +58,26 @@ const userController = {
 
       delete user.password;
 
-      res.json({
-        msg: "login berhasi",
-        user: user,
-      });
-    } catch {
+      const payload = {
+        id: user.user_id,
+        username: user.fullname,
+        email: user.email,
+      };
+
+      user.token = generate(payload);
+      user.refreshToken = reGenerate(payload);
+
+      // res.cookie("token", user.token, {
+      //   httpOnly: true,
+      //   maxAge: 60 * 60 * 24 * 7 * 1000,
+      //   secure: false,
+      //   path: "/",
+      //   sameSite: "strict"
+      // });
+
+      response(res, user, 200, "Login berhasil");
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -75,7 +94,8 @@ const userController = {
         msg: "get profile berhasil",
         data: user,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -91,7 +111,8 @@ const userController = {
         msg: "get user skill berhasil",
         skills: skill,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -107,7 +128,8 @@ const userController = {
         msg: "get user skill berhasil",
         portfolio: porto,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -123,7 +145,8 @@ const userController = {
         msg: "get user experience berhasil",
         experiences: exp,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -139,7 +162,8 @@ const userController = {
         msg: "insert skill berhasil",
         skill: name,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -148,7 +172,7 @@ const userController = {
     try {
       let image;
       if (req.file) {
-        image = `http://${req.get("host")}/portofolio/${req.file.filename}`;
+        image = await cloudinary.uploader.upload(req.file.path);
       }
 
       const data = {
@@ -156,7 +180,7 @@ const userController = {
         name: req.body.name,
         link: req.body.link,
         type: req.body.type,
-        image,
+        file: image.url,
       };
 
       await userModel.insertPortfolio(data);
@@ -165,7 +189,8 @@ const userController = {
         msg: "insert porto berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -175,6 +200,7 @@ const userController = {
       const data = {
         id: req.body.id,
         company_id: req.body.company_id,
+        position: req.body.position,
         start: req.body.start,
         end: req.body.end,
         description: req.body.description,
@@ -186,7 +212,8 @@ const userController = {
         msg: "insert experience berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -199,14 +226,14 @@ const userController = {
       let avatar;
 
       if (req.file) {
-        avatar = `http://${req.get("host")}/avatar/${req.file.filename}`;
+        avatar = await cloudinary.uploader.upload(req.file.path);
       }
 
       const data = {
         id,
         fullname: req.body.fullname,
         phone: req.body.phone,
-        avatar,
+        file: avatar.url,
         title: req.body.title,
         location: req.body.location,
         description: req.body.description,
@@ -221,7 +248,8 @@ const userController = {
         msg: "update profile berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -233,7 +261,7 @@ const userController = {
       let image;
 
       if (req.file) {
-        image = `http://${req.get("host")}/portfolio/${req.file.filename}`;
+        image = await cloudinary.uploader.upload(req.file.path);
       }
 
       const data = {
@@ -242,7 +270,7 @@ const userController = {
         name: req.body.name,
         link: req.body.link,
         type: req.body.type,
-        image,
+        file: image.url,
       };
 
       console.log(data);
@@ -253,7 +281,8 @@ const userController = {
         msg: "update portfolio berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -279,7 +308,8 @@ const userController = {
         msg: "update experience berhasil",
         data: data,
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
@@ -287,42 +317,45 @@ const userController = {
   // delete
   deleteSkill: async (req, res, next) => {
     try {
-      const { id, skill_id } = req.params;
+      const { skill_id } = req.params;
 
-      await userModel.deleteSkill(id, skill_id);
+      await userModel.deleteSkill(skill_id);
 
       res.json({
         msg: "delete skill berhasil",
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
 
   deletePortfolio: async (req, res, next) => {
     try {
-      const { id, porto_id } = req.params;
+      const { porto_id } = req.params;
 
-      await userModel.deletePortfolio(id, porto_id);
+      await userModel.deletePortfolio(porto_id);
 
       res.json({
         msg: "delete portfolio berhasil",
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },
 
   deleteExperience: async (req, res, next) => {
     try {
-      const { id, exp_id } = req.params;
+      const { exp_id } = req.params;
 
-      await userModel.deleteExperience(id, exp_id);
+      await userModel.deleteExperience(exp_id);
 
       res.json({
         msg: "delete experience berhasil",
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       next(new createError.InternalServerError());
     }
   },

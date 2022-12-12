@@ -16,11 +16,7 @@ const {
   editExperience,
   deleteExperience,
 } = require("../controller/user.controller");
-const {
-  avatarUpload,
-  portoUpload,
-  companyUpload,
-} = require("../middleware/multer");
+const upload = require("../middleware/multer");
 const router = express.Router();
 
 router
@@ -36,17 +32,17 @@ router
 
   // insert new data
   .post("/skill", insertSkill)
-  .post("/portfolio", portoUpload.single("image"), insertPortfolio)
+  .post("/portfolio", upload.single("image"), insertPortfolio)
   .post("/experience", insertExperience)
 
   // update user data
-  .put("/update/:id", avatarUpload.single("avatar"), editUserDetail)
-  .put("/:id/portfolio/:porto_id", portoUpload.single("image"), editPortfolio)
+  .put("/update/:id", upload.single("avatar"), editUserDetail)
+  .put("/:id/portfolio/:porto_id", upload.single("image"), editPortfolio)
   .put("/:id/experience/:exp_id", editExperience)
 
   // delete user data
-  .delete("/:id/skill/:skill_id", deleteSkill)
-  .delete("/:id/portfolio/:porto_id", deletePortfolio)
-  .delete("/:id/experience/:exp_id", deleteExperience);
+  .delete("/skill/:skill_id", deleteSkill)
+  .delete("/portfolio/:porto_id", deletePortfolio)
+  .delete("/experience/:exp_id", deleteExperience);
 
 module.exports = router;

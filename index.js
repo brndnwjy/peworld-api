@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const morgan = require("morgan");
@@ -13,7 +14,11 @@ const main = require("./src/router");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin:"http://localhost:3000"
+}));
+app.use(cookieParser());
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
@@ -30,9 +35,9 @@ app.use(
 
 app.use("/v1", main);
 
-app.use("/ava", express.static(path.join(__dirname, "/upload/avatar")));
-app.use("/comp", express.static(path.join(__dirname, "/upload/company")));
-app.use("/porto", express.static(path.join(__dirname, "/upload/portofolio")));
+app.use("/avatar", express.static(path.join(__dirname, "/upload/avatar")));
+app.use("/company", express.static(path.join(__dirname, "/upload/company")));
+app.use("/portofolio", express.static(path.join(__dirname, "/upload/portfolio")));
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
