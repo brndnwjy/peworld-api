@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "2c2e8a20-b96c-409b-a4d1-68a404d7aaed",
+		"name": "Peworld",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\" : \"Kobo Kanaeru\",\r\n    \"email\" : \"kobo@mail.com\",\r\n    \"phone\" : \"081234567890\",\r\n    \"password\" : \"kobo123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kobo@mail.com\",\r\n    \"password\": \"kobo123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/login",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullname",
+									"value": "Kobo Kanaeru",
+									"type": "default"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/brndnwjy/Downloads/citylink.png",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/update/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"update",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Skills",
+			"item": [
+				{
+					"name": "Insert Skill",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7\",\r\n    \"name\": \"Golang\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/skill",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Skill",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/skill",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Skill",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/skill/1",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"skill",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Portfolio",
+			"item": [
+				{
+					"name": "Insert Portfolio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "Angkasa",
+									"type": "default"
+								},
+								{
+									"key": "link",
+									"value": "angkasa.id",
+									"type": "default"
+								},
+								{
+									"key": "type",
+									"value": "true",
+									"type": "default"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/brndnwjy/Downloads/Screenshot 2022-10-27 020623.png"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/portfolio",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"portfolio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Portfolio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/portfolio",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"portfolio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Portfolio",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Angkasa Ticketing",
+									"type": "default"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/brndnwjy/Downloads/Screenshot 2022-10-27 020525.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/portfolio/2",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"portfolio",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Portfolio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/portfolio/2",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"portfolio",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Experience",
+			"item": [
+				{
+					"name": "Insert Experience",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7\",\r\n    \"company_id\": \"f4f6dac5-b33a-4253-b55b-83172339f438\",\r\n    \"start\": \"2019-06-25\",\r\n    \"end\": \"2022-07-10\",\r\n    \"description\": \"Web Development Lead\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/experience",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Experience",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/experience",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Experience",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"Junior Web Developer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/experience/1",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"experience",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Experience",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/user/9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7/experience/1",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"user",
+								"9a2e9169-70b3-43b8-a1b0-ddb7f8f82cd7",
+								"experience",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Makmur Jaya Abadi\",\r\n    \"email\" : \"mjabadi@mail.com\",\r\n    \"phone\" : \"02134567890\",\r\n    \"password\" : \"mjabadi123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/company/register",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"company",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mjabadi@mail.com\",\r\n    \"password\" : \"mjabadi123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/company/login",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"company",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://modern-jay-peplum.cyclic.app/v1/company/edit",
+							"protocol": "https",
+							"host": [
+								"modern-jay-peplum",
+								"cyclic",
+								"app"
+							],
+							"path": [
+								"v1",
+								"company",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
