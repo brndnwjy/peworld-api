@@ -161,28 +161,29 @@ const companyController = {
   editCompanyDetail: async (req, res, next) => {
     try {
       const id = req.params.id;
-      const { name, area, location, description, insta, linkedin } = req.body;
       let logo;
 
       if (req.file) {
         logo = await cloudinary.uploader.upload(req.file.path);
-        console.log("logo")
-        console.log(logo)
-        console.log("logo")
       }
 
       const data = {
         id,
-        name,
-        area,
-        location,
-        description,
-        insta,
-        linkedin,
         file: logo.url,
+        name: req.body.name,
+        area: req.body.area,
+        location: req.body.location,
+        description: req.body.description,
+        insta: req.body.insta,
+        linkedin: req.body.linkedin,
       };
 
       await companyModel.editCompanyDetail(data);
+
+      res.json({
+        msg: "update company berhasil",
+        data: data,
+      });
       
     } catch (err) {
       console.log(err);
