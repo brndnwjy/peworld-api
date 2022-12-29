@@ -166,6 +166,9 @@ const companyController = {
 
       if (req.file) {
         logo = await cloudinary.uploader.upload(req.file.path);
+        console.log("logo")
+        console.log(logo)
+        console.log("logo")
       }
 
       const data = {
