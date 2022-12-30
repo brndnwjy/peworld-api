@@ -117,8 +117,6 @@ Contributions are what make the open source community such an amazing place to b
 ## Related Project
 :rocket: [`Peworld (Frontend)`](https://github.com/brndnwjy/peworld-app)
 
-<!-- :rocket: [`Mamarecipe Web Service`](https://dove-chat.herokuapp.com/) -->
-
-<!-- :rocket: [`Mamarecipe App Demo`](https://dove-chat-fe.vercel.app/login) -->
+:rocket: [`Peworld App Demo`](https://peworld-app.vercel.app/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
